@@ -11,10 +11,10 @@ Stack* init_stack(Node* node) {
     return stack;
 }
 
-Node* pop(Stack* stack) {
+Node* pop(Stack* stack, PopType type) {
     Node* node = stack->first;
 
-    if (node == NULL || node->next == NULL) {
+    if (node == NULL || node->next == NULL | type == FIRST) {
         stack->first = NULL;
         return node;
     }
