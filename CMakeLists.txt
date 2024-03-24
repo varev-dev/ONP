@@ -9,4 +9,7 @@ add_executable(ONPinC main.c
         includes/Node.h
         includes/Stack.h
         sources/Node.c
-        sources/Stack.c)
+        sources/Stack.c
+        includes/Reader.h
+        sources/Reader.c
+)
