@@ -50,8 +50,6 @@ void append_to_token(Token* token, const char *value) {
     token->value[length+1] = '\0';
 }
 
-#include <stdio.h>
-
 void append_counter(Token* token, const int *value) {
     int digits = (int) floor(log10 (abs (*value)));
     while (digits >= 0) {

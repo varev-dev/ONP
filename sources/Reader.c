@@ -48,6 +48,10 @@ void handle_divider(Stack* main, Stack* operators, Token* token) {
     token = NULL;
 }
 
+/**
+ * @todo chop into smaller functions & make it works (atm handle_divider don't work at all)
+ * @todo remove char scanner from FUNCTION call
+ */
 Stack* read_input(Tag endTag, int* count) {
     Stack* main = init_stack(NULL), * operators = init_stack(NULL);
     Token* token = NULL;
@@ -74,10 +78,8 @@ Stack* read_input(Tag endTag, int* count) {
             append_stack(main, read_input(CLOSE, count));
         } else if (token == NULL && significance(&input)) {
             token = init_token_with_value(OPERATOR, &input);
-
             if (operators->first != NULL && *operators->first->data->value != 'N')
                 append_operators(main, operators, &input);
-
             push(operators, init_node(token, NULL), FIRST);
         } else if (input >= 'A' && input <= 'Z') {
             if (token == NULL) token = init_token_with_value(FUNCTION, &input);
