@@ -20,6 +20,7 @@ typedef enum ActionType {
 Stack* init_stack(Node* node);
 Node* pop(Stack* stack, ActionType type);
 void push(Stack* stack, Node* node, ActionType type);
+void append_stack(Stack* main, Stack* append);
 void print_stack(Stack* stack);
 void delete_stack(Stack* stack);
 

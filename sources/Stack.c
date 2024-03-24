@@ -16,7 +16,10 @@ Node* pop(Stack* stack, ActionType type) {
 
     if (node == NULL || node->next == NULL || type == FIRST) {
         stack->first = NULL;
-        if (node != NULL) node->next = NULL;
+        if (node != NULL) {
+            stack->first = node->next;
+            node->next = NULL;
+        }
         return node;
     }
 
@@ -44,6 +47,18 @@ void push(Stack* stack, Node* node, ActionType type) {
 
     stack->last->next = node;
     stack->last = node;
+}
+
+/**
+ * @todo consider adding first node to main & not iterate over whole stack
+ */
+void append_stack(Stack* main, Stack* append) {
+    Node* node;
+    while (append->first != NULL) {
+        node = pop(append, FIRST);
+        push(main, node, LAST);
+    }
+    node = NULL;
 }
 
 void print_stack(Stack* stack) {
