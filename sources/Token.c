@@ -5,8 +5,8 @@
 #include <string.h>
 #include "../includes/Token.h"
 
-char significance(const char* operand) {
-    switch (*operand) {
+char significance(const char* operator) {
+    switch (*operator) {
         case '+':
         case '-':
             return 1;
@@ -23,7 +23,8 @@ char significance(const char* operand) {
 Token* init_token_with_value(Type type, const char *value) {
     Token* token = (Token*) malloc(sizeof(Token));
     token->type = type;
-    token->value = malloc(sizeof(char) * 2);
+    size_t size = (type == OPERATOR ? OPERAND_SIZE : NUMBER_SIZE);
+    token->value = malloc((size + 1) * sizeof(char));
     token->value[0] = *value;
     token->value[1] = '\0';
     return token;
@@ -32,7 +33,7 @@ Token* init_token_with_value(Type type, const char *value) {
 Token* init_token(Type type) {
     Token* token = (Token*) malloc(sizeof(Token));
     token->type = type;
-    size_t size = (type == OPERAND ? OPERAND_SIZE : NUMBER_SIZE);
+    size_t size = (type == OPERATOR ? OPERAND_SIZE : NUMBER_SIZE);
     token->value = malloc((size + 1) * sizeof(char));
     token->value[size] = '\0';
     return token;
@@ -49,8 +50,8 @@ void append_to_token(Token* token, const char *value) {
 }
 
 void delete_token(Token* token) {
-    /*char* value = token->value;
+    char* value = token->value;
     token->value = NULL;
-    free(value);*/
+    free(value);
     free(token);
 }

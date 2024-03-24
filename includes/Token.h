@@ -10,7 +10,7 @@
 
 typedef enum Type {
     NUMBER,
-    OPERAND,
+    OPERATOR,
     FUNCTION
 } Type;
 
