@@ -9,9 +9,9 @@
 #define NUMBER_SIZE 11
 
 typedef enum Type {
-    NUMBER = 0,
-    OPERAND = 1,
-    FUNCTION = 2
+    NUMBER,
+    OPERAND,
+    FUNCTION
 } Type;
 
 typedef struct Token {
@@ -19,8 +19,10 @@ typedef struct Token {
     char *value;
 } Token;
 
+char significance(const char* operand);
 Token* init_token(Type type);
-Token* init_token_with_value(Type type, char *value);
+Token* init_token_with_value(Type type, const char *value);
+void append_to_token(Token* token, const char *value);
 void delete_token(Token* token);
 
 #endif //ONPINC_TOKEN_H
