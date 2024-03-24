@@ -13,6 +13,6 @@ typedef enum Tag {
     END = '.'
 } Tag;
 
-Stack* read_input(Tag endTag);
+Stack* read_input(Tag endTag, int* count);
 
 #endif //ONPINC_READER_H
