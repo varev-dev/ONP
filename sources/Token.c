@@ -3,6 +3,7 @@
 //
 #include <malloc.h>
 #include <string.h>
+#include <math.h>
 #include "../includes/Token.h"
 
 char significance(const char* operator) {
@@ -47,6 +48,16 @@ void append_to_token(Token* token, const char *value) {
 
     token->value[length] = *value;
     token->value[length+1] = '\0';
+}
+
+#include <stdio.h>
+
+void append_counter(Token* token, const int *value) {
+    int digits = (int) floor(log10 (abs (*value)));
+    while (digits >= 0) {
+        char digit = (char) (*value / pow(10, digits--) + '0');
+        append_to_token(token, &digit);
+    }
 }
 
 void delete_token(Token* token) {
