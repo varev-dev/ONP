@@ -12,14 +12,14 @@ typedef struct Stack {
     Node* last;
 } Stack;
 
-typedef enum PopType {
+typedef enum ActionType {
     FIRST = 0,
-    LAST = 1
-} PopType;
+    LAST
+} ActionType;
 
 Stack* init_stack(Node* node);
-Node* pop(Stack* stack, PopType type);
-void push(Stack* stack, Node* node);
+Node* pop(Stack* stack, ActionType type);
+void push(Stack* stack, Node* node, ActionType type);
 void print_stack(Stack* stack);
 void delete_stack(Stack* stack);
 

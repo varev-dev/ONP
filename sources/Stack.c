@@ -11,11 +11,12 @@ Stack* init_stack(Node* node) {
     return stack;
 }
 
-Node* pop(Stack* stack, PopType type) {
+Node* pop(Stack* stack, ActionType type) {
     Node* node = stack->first;
 
-    if (node == NULL || node->next == NULL | type == FIRST) {
+    if (node == NULL || node->next == NULL || type == FIRST) {
         stack->first = NULL;
+        if (node != NULL) node->next = NULL;
         return node;
     }
 
@@ -29,10 +30,15 @@ Node* pop(Stack* stack, PopType type) {
     return node->next;
 }
 
-void push(Stack* stack, Node* node) {
+void push(Stack* stack, Node* node, ActionType type) {
     if (stack->first == NULL) {
         stack->first = node;
         stack->last = node;
+        return;
+    }
+    if (type == FIRST) {
+        node->next = stack->first;
+        stack->first = node;
         return;
     }
 
