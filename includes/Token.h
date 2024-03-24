@@ -23,7 +23,7 @@ char significance(const char* operand);
 Token* init_token(Type type);
 Token* init_token_with_value(Type type, const char *value);
 void append_to_token(Token* token, const char *value);
-void append_counter(Token* token, const int *value);
+void append_counter(Token* token, int *value);
 void delete_token(Token* token);
 
 #endif //ONPINC_TOKEN_H

@@ -50,10 +50,12 @@ void append_to_token(Token* token, const char *value) {
     token->value[length+1] = '\0';
 }
 
-void append_counter(Token* token, const int *value) {
+void append_counter(Token* token, int *value) {
     int digits = (int) floor(log10 (abs (*value)));
     while (digits >= 0) {
-        char digit = (char) (*value / pow(10, digits--) + '0');
+        char digit = (char) (*value / pow(10, digits) + '0');
+        *value -= (int) ((*value / pow(10, digits)) * pow(10, digits));
+        digits--;
         append_to_token(token, &digit);
     }
 }
