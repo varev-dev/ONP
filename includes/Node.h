@@ -12,6 +12,7 @@ typedef struct Node {
 } Node;
 
 Node* init_node(Token* data, Node* next);
+void print_node(Node* node);
 void delete_node(Node* node);
 
 #endif //ONPINC_NODE_H
