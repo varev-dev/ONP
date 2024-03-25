@@ -65,9 +65,10 @@ void print_stack(Stack* stack) {
     Node* node = stack->first;
 
     while (node != NULL) {
-        printf("%s ", node->data->value);
+        print_node(node);
         node = node->next;
     }
+
     printf("\n");
 }
 
