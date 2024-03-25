@@ -12,4 +12,6 @@ add_executable(ONPinC main.c
         sources/Stack.c
         includes/Reader.h
         sources/Reader.c
+        includes/Calculator.h
+        sources/Calculator.c
 )
