@@ -1,4 +1,5 @@
 #include "includes/Reader.h"
+#include "includes/Calculator.h"
 #include <stdio.h>
 
 int main() {
@@ -8,7 +9,8 @@ int main() {
     while (expressions > 0) {
         Stack* stack = read_input(END, 0);
         print_stack(stack);
-        delete_stack(stack);
+        calculate(stack);
+        printf("\n");
         expressions--;
     }
 
