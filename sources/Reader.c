@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 
-int compare_significance(Node* node, char* operand) {
-    char signify = significance(node->data->value), signify2 = significance(operand);
+int compare_significance(Node* node, char* operator) {
+    char nodeOperator = (char) node->data->value;
+    char signify = significance(&nodeOperator), signify2 = significance(operator);
 
     if (signify > signify2)
         return 1;
@@ -17,7 +18,7 @@ int compare_significance(Node* node, char* operand) {
 
 void append_negations(Stack* main, Stack* operators) {
     Node* node;
-    while(operators->first != NULL && *operators->first->data->value == 'N') {
+    while(operators->first != NULL && operators->first->data->value == 'N') {
         node = pop(operators, FIRST);
         push(main, node, LAST);
     }
@@ -31,12 +32,10 @@ void append_operators(Stack* main, Stack* operators, char* operator) {
         push(main, pop(operators,FIRST), LAST);
 }
 
-int is_countable(char* text) {
-    return stricmp(text, "MAX") == 0 || stricmp(text, "MIN") == 0;
-}
-
-int is_function(char* text) {
-    return is_countable(text) || stricmp(text, "IF") == 0;
+int is_countable(const Token* token) {
+    if (token->type != FUNCTION)
+        return 0;
+    return token->value % 10;
 }
 
 int is_function_init(const char* character) {
@@ -51,9 +50,27 @@ int is_operator(const char* character) {
     return significance(character);
 }
 
+void parse_by_second_char(char* input) {
+    scanf("%c", input);
+    if (*input == 'F') *input = IF;
+    else if (*input == 'A') *input = MAX;
+    else *input = MIN;
+}
+
+void skip_function_chars(char* input) {
+    if (*input != IF)
+        scanf("%c", input);
+    scanf("%c%c", input, input);
+}
+
+void append_function(Stack* main, Token* token) {
+    int counter = 1;
+    append_stack(main, read_input(CLOSE, &counter));
+    if (is_countable(token)) append_counter(token, &counter);
+}
+
 /**
  * @todo chop into smaller functions & make it works (atm handle_divider don't work at all)
- * @todo remove char scanner from FUNCTION call
  */
 Stack* read_input(Tag endTag, int* count) {
     Stack* main = init_stack(NULL), * operators = init_stack(NULL);
@@ -75,29 +92,18 @@ Stack* read_input(Tag endTag, int* count) {
         } else if (input == OPEN) {
             append_stack(main, read_input(CLOSE, count));
         } else if (is_number(&input)) {
-            if (token == NULL)
-                token = init_token_with_value(NUMBER, &input);
-            else
-                append_to_token(token, &input);
+            if (token == NULL) token = init_token_with_value(NUMBER, &input);
+            else append_to_token(token, &input);
         } else if (is_operator(&input)) {
             token = init_token_with_value(OPERATOR, &input);
-            if (operators->first != NULL && *operators->first->data->value != 'N')
+            if (operators->first != NULL && operators->first->data->value != 'N')
                 append_operators(main, operators, &input);
             push(operators, init_node(token, NULL), FIRST);
         } else if (is_function_init(&input)) {
+            parse_by_second_char(&input);
             token = init_token_with_value(FUNCTION, &input);
-            scanf("%c", &input);
-            append_to_token(token, &input);
-
-            if (input != 'F') {
-                scanf("%c", &input);
-                append_to_token(token, &input);
-            }
-
-            scanf("%c%c", &input, &input);
-            int counter = 1;
-            append_stack(main, read_input(CLOSE, &counter));
-            if (is_countable(token->value)) append_counter(token, &counter);
+            skip_function_chars(&input);
+            append_function(main, token);
         } else if (input == endTag) {
             append_stack(main, operators);
             break;
