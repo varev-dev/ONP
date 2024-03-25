@@ -9,6 +9,7 @@
 typedef enum Tag {
     DIVIDER = ' ',
     SEPARATOR = ',',
+    OPEN = '(',
     CLOSE = ')',
     END = '.'
 } Tag;
