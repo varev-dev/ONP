@@ -26,7 +26,7 @@ void append_negations(Stack* main, Stack* operators) {
 }
 
 void append_operators(Stack* main, Stack* operators, char* operator) {
-    if (compare_significance(operators->last, operator) == 0)
+    if (compare_significance(operators->last, operator) >= 0)
         append_stack(main, operators);
     else if (compare_significance(operators->first, operator) != -1)
         push(main, pop(operators,FIRST), LAST);
@@ -87,7 +87,7 @@ Stack* read_input(Tag endTag, int* count) {
             }
             token = NULL;
         } else if (input == SEPARATOR) {
-            if (operators->first != NULL) append_operators(main, operators, &input);
+            if (operators->first) append_operators(main, operators, &input);
             (*count)++;
         } else if (input == OPEN) {
             append_stack(main, read_input(CLOSE, count));
