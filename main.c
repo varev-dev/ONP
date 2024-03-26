@@ -4,7 +4,7 @@
 
 int main() {
     unsigned short expressions;
-    scanf("%hd", &expressions);
+    scanf("%hu", &expressions);
 
     while (expressions > 0) {
         Stack* stack = read_input(END, 0);

@@ -118,10 +118,9 @@ void handle_node(Stack* main, Stack* local, Node* node) {
 
 void calculate(Stack* stack) {
     Stack* localStack = init_stack(NULL);
-    Node* node;
 
     while (stack->first != NULL) {
-        node = pop(stack, FIRST);
+        Node* node = pop(stack, FIRST);
         handle_node(stack, localStack, node);
     }
 

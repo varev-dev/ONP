@@ -34,7 +34,7 @@ void append_operators(Stack* main, Stack* operators, char* operator) {
 
 int is_countable(const Token* token) {
     if (token->type != FUNCTION)
-        return 0;
+        return IF;
     return token->value % 10;
 }
 
@@ -69,9 +69,6 @@ void append_function(Stack* main, Token* token) {
     if (is_countable(token)) append_counter(token, &counter);
 }
 
-/**
- * @todo chop into smaller functions & make it works (atm handle_divider don't work at all)
- */
 Stack* read_input(Tag endTag, int* count) {
     Stack* main = init_stack(NULL), * operators = init_stack(NULL);
     Token* token = NULL;
@@ -91,6 +88,7 @@ Stack* read_input(Tag endTag, int* count) {
             (*count)++;
         } else if (input == OPEN) {
             append_stack(main, read_input(CLOSE, count));
+            append_negations(main, operators);
         } else if (is_number(&input)) {
             if (token == NULL) token = init_token_with_value(NUMBER, &input);
             else append_to_token(token, &input);
