@@ -49,16 +49,14 @@ void push(Stack* stack, Node* node, ActionType type) {
     stack->last = node;
 }
 
-/**
- * @todo consider adding first node to main & not iterate over whole stack
- */
 void append_stack(Stack* main, Stack* append) {
-    Node* node;
-    while (append->first != NULL) {
-        node = pop(append, FIRST);
-        push(main, node, LAST);
-    }
-    node = NULL;
+    Node* node = append->first;
+    if (node == NULL)
+        return;
+    push(main, node, LAST);
+    main->last = append->last;
+    append->first = NULL;
+    append->last = NULL;
 }
 
 void print_stack(Stack* stack) {

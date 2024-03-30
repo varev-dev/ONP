@@ -7,7 +7,8 @@ int main() {
     scanf("%hu", &expressions);
 
     while (expressions > 0) {
-        Stack* stack = read_input(END, 0);
+        Stack* stack = init_stack(NULL);
+        read_input(stack, END, 0);
         print_stack(stack);
         calculate(stack);
         printf("\n");

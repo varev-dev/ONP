@@ -65,12 +65,12 @@ void skip_function_chars(char* input) {
 
 void append_function(Stack* main, Token* token) {
     int counter = 1;
-    append_stack(main, read_input(CLOSE, &counter));
+    read_input(main, CLOSE, &counter);
     if (is_countable(token)) append_counter(token, &counter);
 }
 
-Stack* read_input(Tag endTag, int* count) {
-    Stack* main = init_stack(NULL), * operators = init_stack(NULL);
+Stack* read_input(Stack* main, Tag endTag, int* count) {
+    Stack* operators = init_stack(NULL);
     Token* token = NULL;
     char input = '\0';
 
@@ -87,7 +87,7 @@ Stack* read_input(Tag endTag, int* count) {
             if (operators->first) append_operators(main, operators, &input);
             (*count)++;
         } else if (input == OPEN) {
-            append_stack(main, read_input(CLOSE, count));
+            read_input(main, CLOSE, count);
             append_negations(main, operators);
         } else if (is_number(&input)) {
             if (token == NULL) token = init_token_with_value(NUMBER, &input);
@@ -107,6 +107,8 @@ Stack* read_input(Tag endTag, int* count) {
             break;
         }
     }
+    delete_stack(operators);
+    delete_token(token);
     return main;
 }
 
