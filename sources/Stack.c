@@ -67,7 +67,7 @@ void print_stack(Stack* stack) {
         node = node->next;
     }
 
-    printf("\n");
+    putchar('\n');
 }
 
 void delete_stack(Stack* stack) {

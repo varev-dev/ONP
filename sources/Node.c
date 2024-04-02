@@ -19,7 +19,8 @@ void print_node(Node* node) {
             printf("%d ", node->data->value);
             break;
         case OPERATOR:
-            printf("%c ", node->data->value);
+            putchar(node->data->value);
+            putchar(' ');
             break;
         case FUNCTION:
             index = node->data->value % 10;

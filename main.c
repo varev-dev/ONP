@@ -11,7 +11,7 @@ int main() {
         read_input(stack, END, 0);
         print_stack(stack);
         calculate(stack);
-        printf("\n");
+        putchar('\n');
         expressions--;
     }
 
