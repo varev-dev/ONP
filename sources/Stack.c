@@ -78,4 +78,5 @@ void delete_stack(Stack* stack) {
         delete_node(node);
         node = stack->first;
     }
+    free(stack);
 }

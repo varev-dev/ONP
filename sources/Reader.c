@@ -51,16 +51,18 @@ int is_operator(const char* character) {
 }
 
 void parse_by_second_char(char* input) {
-    scanf("%c", input);
+   *input = (char) getchar();
     if (*input == 'F') *input = IF;
     else if (*input == 'A') *input = MAX;
     else *input = MIN;
 }
 
+// Skip the DIVIDER and OPEN characters to prevent recursive calling
 void skip_function_chars(char* input) {
     if (*input != IF)
-        scanf("%c", input);
-    scanf("%c%c", input, input);
+        getchar();
+    getchar();
+    getchar();
 }
 
 void append_function(Stack* main, Token* token) {
@@ -75,7 +77,7 @@ Stack* read_input(Stack* main, Tag endTag, int* count) {
     char input = '\0';
 
     while (1) {
-        scanf("%c", &input);
+        input = (char) getchar();
 
         if (input == DIVIDER) {
             if (token && token->type != OPERATOR) {

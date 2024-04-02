@@ -90,7 +90,7 @@ Status operator_execute(Stack* stack, Token* operator) {
     }
 }
 
-void handle_node(Stack* main, Stack* local, Node* node) {
+Status handle_node(Stack* local, Node* node) {
     Status status = OK;
     switch (node->data->type) {
         case NUMBER:
@@ -104,27 +104,29 @@ void handle_node(Stack* main, Stack* local, Node* node) {
             if (node->data->type == FUNCTION) function_execute(local, node->data);
             else status = operator_execute(local, node->data);
 
-            if (status == ERROR) {
-                printf("ERROR\n");
-                delete_stack(local);
-                delete_stack(main);
-                return;
-            }
+            if (status == ERROR)
+                puts("ERROR\n");
+
+            delete_node(node);
             break;
         default:
             break;
     }
+
+    return status;
 }
 
 void calculate(Stack* stack) {
     Stack* localStack = init_stack(NULL);
+    Status status = OK;
 
-    while (stack->first != NULL) {
+    while (stack->first != NULL && status == OK) {
         Node* node = pop(stack, FIRST);
-        handle_node(stack, localStack, node);
+        status = handle_node(localStack, node);
     }
 
-    print_stack(localStack);
+    if (status == OK)
+        print_stack(localStack);
     delete_stack(localStack);
     delete_stack(stack);
 }
